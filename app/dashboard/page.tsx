@@ -1,120 +1,134 @@
-import { Card } from "@/components/ui/card"
-import {
-  Users,
-  BarChart,
-  DollarSign,
-  ArrowUpRight,
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { 
+  Activity, 
+  Users, 
+  Palette, 
+  ArrowUpRight, 
   ArrowDownRight,
-} from "lucide-react"
+  Clock,
+  Star
+} from "lucide-react";
 
 const stats = [
   {
-    title: "Total Users",
-    value: "2,543",
-    change: "+12.5%",
+    title: "Active Projects",
+    value: "12",
+    change: "+2",
+    trend: "up",
+    icon: Palette,
+  },
+  {
+    title: "Team Members",
+    value: "24",
+    change: "+4",
     trend: "up",
     icon: Users,
   },
   {
-    title: "Revenue",
-    value: "$45,231",
-    change: "+8.2%",
-    trend: "up",
-    icon: DollarSign,
-  },
-  {
-    title: "Active Sessions",
-    value: "1,234",
-    change: "-2.4%",
+    title: "Productivity",
+    value: "89%",
+    change: "-2%",
     trend: "down",
-    icon: BarChart,
+    icon: Activity,
   },
-]
+];
 
 const recentActivity = [
   {
-    user: "John Doe",
-    action: "Completed onboarding",
-    time: "2 minutes ago",
+    title: "New project created",
+    description: "Website redesign for Client A",
+    time: "2 hours ago",
+    icon: Palette,
   },
   {
-    user: "Jane Smith",
-    action: "Upgraded to Pro plan",
-    time: "15 minutes ago",
+    title: "Team member joined",
+    description: "Sarah Johnson joined the design team",
+    time: "4 hours ago",
+    icon: Users,
   },
   {
-    user: "Mike Johnson",
-    action: "Added new integration",
-    time: "1 hour ago",
+    title: "Project completed",
+    description: "Mobile app UI design",
+    time: "1 day ago",
+    icon: Star,
   },
-]
+];
 
 export default function DashboardPage() {
   return (
     <div className="space-y-6">
+      {/* Welcome Section */}
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-        <p className="text-muted-foreground">
-          Welcome back! Here's an overview of your business.
-        </p>
+        <h1 className="text-3xl font-bold text-white">Welcome back</h1>
+        <p className="text-white/60">Here's what's happening with your projects today.</p>
       </div>
 
-      {/* Stats */}
+      {/* Stats Grid */}
       <div className="grid gap-4 md:grid-cols-3">
         {stats.map((stat) => {
-          const Icon = stat.icon
+          const Icon = stat.icon;
           return (
-            <Card key={stat.title} className="p-6">
+            <Card key={stat.title} className="p-6 bg-white/5 border-white/10">
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-muted-foreground">
-                    {stat.title}
-                  </p>
-                  <p className="text-2xl font-bold">{stat.value}</p>
+                  <p className="text-sm font-medium text-white/60">{stat.title}</p>
+                  <p className="text-2xl font-bold text-white">{stat.value}</p>
                 </div>
-                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Icon className="h-6 w-6 text-primary" />
+                <div className="h-12 w-12 rounded-full bg-white/5 flex items-center justify-center">
+                  <Icon className="h-6 w-6 text-white" />
                 </div>
               </div>
-              <div className="mt-4 flex items-center">
+              <div className="mt-4 flex items-center gap-1">
                 {stat.trend === "up" ? (
                   <ArrowUpRight className="h-4 w-4 text-green-500" />
                 ) : (
                   <ArrowDownRight className="h-4 w-4 text-red-500" />
                 )}
-                <span
-                  className={`ml-1 text-sm ${
-                    stat.trend === "up" ? "text-green-500" : "text-red-500"
-                  }`}
-                >
+                <span className={`text-sm ${
+                  stat.trend === "up" ? "text-green-500" : "text-red-500"
+                }`}>
                   {stat.change}
                 </span>
               </div>
             </Card>
-          )
+          );
         })}
       </div>
 
       {/* Recent Activity */}
-      <Card className="p-6">
-        <h2 className="text-lg font-semibold mb-4">Recent Activity</h2>
-        <div className="space-y-4">
-          {recentActivity.map((activity) => (
-            <div
-              key={activity.user}
-              className="flex items-center justify-between py-2"
-            >
-              <div>
-                <p className="font-medium">{activity.user}</p>
-                <p className="text-sm text-muted-foreground">
-                  {activity.action}
-                </p>
-              </div>
-              <p className="text-sm text-muted-foreground">{activity.time}</p>
-            </div>
-          ))}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-semibold text-white">Recent Activity</h2>
+          <Button variant="ghost" className="text-white/60 hover:text-white">
+            View all
+          </Button>
         </div>
-      </Card>
+        <div className="space-y-4">
+          {recentActivity.map((activity) => {
+            const Icon = activity.icon;
+            return (
+              <Card key={activity.title} className="p-4 bg-white/5 border-white/10">
+                <div className="flex items-start gap-4">
+                  <div className="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center">
+                    <Icon className="h-5 w-5 text-white" />
+                  </div>
+                  <div className="flex-1 space-y-1">
+                    <p className="text-sm font-medium text-white">{activity.title}</p>
+                    <p className="text-sm text-white/60">{activity.description}</p>
+                  </div>
+                  <div className="flex items-center gap-1 text-sm text-white/40">
+                    <Clock className="h-4 w-4" />
+                    {activity.time}
+                  </div>
+                </div>
+              </Card>
+            );
+          })}
+        </div>
+      </div>
     </div>
-  )
+  );
 } 
