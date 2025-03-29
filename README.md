@@ -52,3 +52,7 @@ This license means you can:
 - Must give appropriate credit
 - Cannot use for commercial purposes
 - Cannot create derivative works
+
+## Note About Statistics
+
+All statistics and numbers mentioned in the website (including user counts, ratings, and other metrics) are placeholder values and should not be considered factual. These numbers are used for demonstration purposes only and do not reflect actual usage or performance metrics of the platform.
