@@ -45,4 +45,10 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) License - see the [LICENSE](LICENSE) file for details.
+
+This license means you can:
+- Share the code freely
+- Must give appropriate credit
+- Cannot use for commercial purposes
+- Cannot create derivative works
