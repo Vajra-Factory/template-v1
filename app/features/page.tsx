@@ -78,7 +78,7 @@ const features = [
 
 const socialProof = [
   {
-    text: "Vajrakama has transformed how we create digital content. The AI-powered features are game-changing.",
+    text: "OverDrift has transformed how we create digital content. The AI-powered features are game-changing.",
     author: "Sarah Chen",
     role: "Creative Director at DesignCo",
     image: "/testimonials/sarah.jpg",
@@ -162,7 +162,7 @@ export default function Features() {
         <div className="container">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white mb-4">Trusted by creators worldwide</h2>
-            <p className="text-zinc-400">See what our users have to say about Vajrakama</p>
+            <p className="text-zinc-400">See what our users have to say about OverDrift</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {socialProof.map((testimonial) => (
@@ -170,7 +170,7 @@ export default function Features() {
                 key={testimonial.author}
                 className="rounded-lg border border-zinc-800 bg-zinc-900/30 p-6"
               >
-                <p className="text-zinc-300 mb-4">"{testimonial.text}"</p>
+                <p className="text-zinc-300 mb-4">&quot;{testimonial.text}&quot;</p>
                 <div className="flex items-center">
                   <div className="h-10 w-10 rounded-full bg-white/10 mr-3" />
                   <div>
@@ -190,7 +190,7 @@ export default function Features() {
           <div className="text-center max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold text-white mb-4">Ready to transform your creative workflow?</h2>
             <p className="text-zinc-400 mb-8">
-              Join thousands of creators who are already using Vajrakama to bring their ideas to life.
+              Join thousands of creators who are already using OverDrift to bring their ideas to life.
             </p>
             <Button
               size="lg"

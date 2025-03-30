@@ -15,12 +15,12 @@ export default function SignUp() {
             <div className="relative h-12 w-12">
               <div className="absolute inset-0 bg-white rounded-lg transform rotate-45" />
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-black font-bold text-xl">V</span>
+                <span className="text-black font-bold text-xl">O</span>
               </div>
             </div>
           </div>
           <h2 className="text-3xl font-bold text-white">Create an account</h2>
-          <p className="mt-2 text-zinc-400">Get started with Vajrakama</p>
+          <p className="mt-2 text-zinc-400">Get started with OverDrift</p>
         </div>
 
         <div className="space-y-4">

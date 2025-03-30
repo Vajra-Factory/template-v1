@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://vajrakama.com/sitemap.xml
+Sitemap: https://overdrift.com/sitemap.xml
 
 # Disallow admin and API routes
 Disallow: /api/

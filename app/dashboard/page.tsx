@@ -1,132 +1,178 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { 
-  Activity, 
-  Users, 
-  Palette, 
-  ArrowUpRight, 
-  ArrowDownRight,
-  Clock,
-  Star
-} from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Cpu, Zap, Cloud, BarChart3 } from "lucide-react";
 
-const stats = [
-  {
-    title: "Active Projects",
-    value: "12",
-    change: "+2",
-    trend: "up",
-    icon: Palette,
-  },
-  {
-    title: "Team Members",
-    value: "24",
-    change: "+4",
-    trend: "up",
-    icon: Users,
-  },
-  {
-    title: "Productivity",
-    value: "89%",
-    change: "-2%",
-    trend: "down",
-    icon: Activity,
-  },
-];
+interface TelemetryData {
+  gpu: {
+    name: string;
+    utilization: number;
+    temperature: number;
+    memory: {
+      used: number;
+      total: number;
+      unit: string;
+    };
+    power: {
+      current: number;
+      limit: number;
+      unit: string;
+    };
+  };
+  cpu: {
+    utilization: number;
+    temperature: number;
+    cores: number;
+  };
+  memory: {
+    used: number;
+    total: number;
+    unit: string;
+  };
+  timestamp: string;
+}
 
-const recentActivity = [
-  {
-    title: "New project created",
-    description: "Website redesign for Client A",
-    time: "2 hours ago",
-    icon: Palette,
-  },
-  {
-    title: "Team member joined",
-    description: "Sarah Johnson joined the design team",
-    time: "4 hours ago",
-    icon: Users,
-  },
-  {
-    title: "Project completed",
-    description: "Mobile app UI design",
-    time: "1 day ago",
-    icon: Star,
-  },
-];
+export default function Dashboard() {
+  const { data: session, status } = useSession();
+  const [telemetry, setTelemetry] = useState<TelemetryData | null>(null);
+  const [loading, setLoading] = useState(true);
 
-export default function DashboardPage() {
-  return (
-    <div className="space-y-6">
-      {/* Welcome Section */}
-      <div>
-        <h1 className="text-3xl font-bold text-white">Welcome back</h1>
-        <p className="text-white/60">Here's what's happening with your projects today.</p>
+  useEffect(() => {
+    const fetchTelemetry = async () => {
+      try {
+        const response = await fetch("/api/telemetry");
+        const data = await response.json();
+        setTelemetry(data);
+      } catch (error) {
+        console.error("Failed to fetch telemetry:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (status === "authenticated") {
+      fetchTelemetry();
+      const interval = setInterval(fetchTelemetry, 5000); // Update every 5 seconds
+      return () => clearInterval(interval);
+    }
+  }, [status]);
+
+  if (status === "loading" || loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-black">
+        <div className="text-white">Loading...</div>
       </div>
+    );
+  }
 
-      {/* Stats Grid */}
-      <div className="grid gap-4 md:grid-cols-3">
-        {stats.map((stat) => {
-          const Icon = stat.icon;
-          return (
-            <Card key={stat.title} className="p-6 bg-white/5 border-white/10">
-              <div className="flex items-center justify-between">
-                <div className="space-y-1">
-                  <p className="text-sm font-medium text-white/60">{stat.title}</p>
-                  <p className="text-2xl font-bold text-white">{stat.value}</p>
-                </div>
-                <div className="h-12 w-12 rounded-full bg-white/5 flex items-center justify-center">
-                  <Icon className="h-6 w-6 text-white" />
-                </div>
-              </div>
-              <div className="mt-4 flex items-center gap-1">
-                {stat.trend === "up" ? (
-                  <ArrowUpRight className="h-4 w-4 text-green-500" />
-                ) : (
-                  <ArrowDownRight className="h-4 w-4 text-red-500" />
-                )}
-                <span className={`text-sm ${
-                  stat.trend === "up" ? "text-green-500" : "text-red-500"
-                }`}>
-                  {stat.change}
-                </span>
-              </div>
-            </Card>
-          );
-        })}
-      </div>
-
-      {/* Recent Activity */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-white">Recent Activity</h2>
-          <Button variant="ghost" className="text-white/60 hover:text-white">
-            View all
+  if (!session) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-black">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-white mb-4">Access Denied</h1>
+          <Button asChild>
+            <a href="/auth/signin">Sign In</a>
           </Button>
         </div>
-        <div className="space-y-4">
-          {recentActivity.map((activity) => {
-            const Icon = activity.icon;
-            return (
-              <Card key={activity.title} className="p-4 bg-white/5 border-white/10">
-                <div className="flex items-start gap-4">
-                  <div className="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center">
-                    <Icon className="h-5 w-5 text-white" />
-                  </div>
-                  <div className="flex-1 space-y-1">
-                    <p className="text-sm font-medium text-white">{activity.title}</p>
-                    <p className="text-sm text-white/60">{activity.description}</p>
-                  </div>
-                  <div className="flex items-center gap-1 text-sm text-white/40">
-                    <Clock className="h-4 w-4" />
-                    {activity.time}
-                  </div>
-                </div>
-              </Card>
-            );
-          })}
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-black p-8">
+      <div className="container mx-auto">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-white">Dashboard</h1>
+          <p className="text-white/60">Monitor your GPU performance</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* GPU Utilization */}
+          <Card className="bg-white/5 border-white/10">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-white">
+                GPU Utilization
+              </CardTitle>
+              <Cpu className="h-4 w-4 text-white/60" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-white">
+                {telemetry?.gpu.utilization ?? 0}%
+              </div>
+              <p className="text-xs text-white/60">
+                {telemetry?.gpu.name ?? "No GPU detected"}
+              </p>
+            </CardContent>
+          </Card>
+
+          {/* GPU Temperature */}
+          <Card className="bg-white/5 border-white/10">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-white">
+                GPU Temperature
+              </CardTitle>
+              <Zap className="h-4 w-4 text-white/60" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-white">
+                {telemetry?.gpu.temperature ?? 0}°C
+              </div>
+              <p className="text-xs text-white/60">
+                Power: {telemetry?.gpu.power.current ?? 0}W
+              </p>
+            </CardContent>
+          </Card>
+
+          {/* GPU Memory */}
+          <Card className="bg-white/5 border-white/10">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-white">
+                GPU Memory
+              </CardTitle>
+              <Cloud className="h-4 w-4 text-white/60" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-white">
+                {telemetry?.gpu.memory.used ?? 0}/{telemetry?.gpu.memory.total ?? 0}
+                {telemetry?.gpu.memory.unit ?? "GB"}
+              </div>
+              <p className="text-xs text-white/60">
+                {Math.round(
+                  ((telemetry?.gpu.memory.used ?? 0) /
+                    (telemetry?.gpu.memory.total ?? 1)) *
+                    100
+                )}%
+                used
+              </p>
+            </CardContent>
+          </Card>
+
+          {/* CPU Usage */}
+          <Card className="bg-white/5 border-white/10">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-white">
+                CPU Usage
+              </CardTitle>
+              <BarChart3 className="h-4 w-4 text-white/60" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-white">
+                {telemetry?.cpu.utilization ?? 0}%
+              </div>
+              <p className="text-xs text-white/60">
+                {telemetry?.cpu.cores ?? 0} cores
+              </p>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>

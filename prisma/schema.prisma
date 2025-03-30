@@ -1,0 +1,199 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          Role      @default(USER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  sessions      Session[]
+  telemetry     Telemetry[]
+  renderJobs    RenderJob[]
+  reports       Report[]
+  subscriptions Subscription[]
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Telemetry {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  timestamp DateTime @default(now())
+  
+  // GPU Metrics
+  gpuUsage      Float
+  vramUsage     Float
+  gpuTemp       Float
+  gpuType       String  // "iGPU" or "dGPU"
+  
+  // CPU Metrics
+  cpuUsage      Float
+  cpuTemp       Float
+  cpuClock      Float
+  
+  // Memory Metrics
+  ramUsage      Float
+  
+  // Performance Metrics
+  fps           Float
+  frameTime     Float
+  resolution    String
+  
+  // Cloud Metrics
+  isCloudRendered Boolean @default(false)
+  cloudProvider   String?
+}
+
+model RenderJob {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  completedAt DateTime?
+  
+  // Job Details
+  status      JobStatus @default(PENDING)
+  priority    Priority  @default(NORMAL)
+  type        RenderType
+  settings    Json      // Render settings as JSON
+  
+  // Performance
+  startTime   DateTime?
+  endTime     DateTime?
+  duration    Int?      // Duration in seconds
+  
+  // Resources
+  gpuType     String?   // "iGPU", "dGPU", or "cloud"
+  cloudCost   Float?    // Cost if rendered in cloud
+  
+  // Results
+  outputUrl   String?   // URL to rendered output
+  logs        String?   // Render logs
+}
+
+model Report {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  
+  // Report Details
+  type      ReportType
+  period    ReportPeriod
+  data      Json     // Report data as JSON
+  pdfUrl    String?  // URL to generated PDF
+  
+  // Status
+  status    ReportStatus @default(PENDING)
+  sentAt    DateTime?
+}
+
+model Subscription {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  
+  // Subscription Details
+  status    SubscriptionStatus @default(ACTIVE)
+  plan      SubscriptionPlan
+  price     Float
+  interval  SubscriptionInterval
+  
+  // Stripe
+  stripeCustomerId    String? @unique
+  stripeSubscriptionId String? @unique
+  stripePriceId       String?
+  
+  // Billing
+  currentPeriodStart DateTime?
+  currentPeriodEnd   DateTime?
+  cancelAtPeriodEnd  Boolean @default(false)
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum JobStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum Priority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+enum RenderType {
+  REALTIME
+  BATCH
+  CLOUD
+}
+
+enum ReportType {
+  PERFORMANCE
+  BILLING
+  USAGE
+}
+
+enum ReportPeriod {
+  DAILY
+  WEEKLY
+  MONTHLY
+  QUARTERLY
+}
+
+enum ReportStatus {
+  PENDING
+  GENERATING
+  COMPLETED
+  FAILED
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  UNPAID
+}
+
+enum SubscriptionPlan {
+  FREE
+  PRO
+  ENTERPRISE
+}
+
+enum SubscriptionInterval {
+  MONTHLY
+  YEARLY
+} 

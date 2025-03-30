@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Definitions -->
+  <defs>
+    <linearGradient id="gradient" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#000000"/>
+      <stop offset="100%" stop-color="#333333"/>
+    </linearGradient>
+    <filter id="motion-blur">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -10" result="motion-blur"/>
+      <feMerge>
+        <feMergeNode in="motion-blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glow">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1"/>
+      <feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 5 -2" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="32" height="32" rx="6" fill="url(#gradient)"/>
+  
+  <!-- Main Design -->
+  <g filter="url(#motion-blur)">
+    <!-- FPS Counter -->
+    <text x="16" y="16" 
+          font-family="monospace" 
+          font-size="12" 
+          fill="#FFFFFF" 
+          text-anchor="middle" 
+          dominant-baseline="middle">
+      60
+    </text>
+    
+    <!-- Angular Shapes -->
+    <path d="M4 4L12 4L8 12Z" fill="#FFFFFF"/>
+    <path d="M28 28L20 28L24 20Z" fill="#FFFFFF"/>
+    
+    <!-- Speed Lines -->
+    <path d="M8 16L24 16" stroke="#FFFFFF" stroke-width="1.5"/>
+    <path d="M16 8L16 24" stroke="#FFFFFF" stroke-width="1.5"/>
+    
+    <!-- Performance Graph -->
+    <path d="M8 24L16 16L24 24" 
+          stroke="#FFFFFF" 
+          stroke-width="1.5" 
+          fill="none" 
+          stroke-linecap="round"/>
+  </g>
+  
+  <!-- Glowing Elements -->
+  <g filter="url(#glow)">
+    <!-- Corner Accents -->
+    <path d="M6 6H8V8H6V6Z" fill="#FFFFFF"/>
+    <path d="M24 6H26V8H24V6Z" fill="#FFFFFF"/>
+    <path d="M6 24H8V26H6V24Z" fill="#FFFFFF"/>
+    <path d="M24 24H26V26H24V24Z" fill="#FFFFFF"/>
+    
+    <!-- Speed Indicators -->
+    <path d="M12 12L16 8L20 12" stroke="#FFFFFF" stroke-width="1" fill="none"/>
+    <path d="M12 20L16 24L20 20" stroke="#FFFFFF" stroke-width="1" fill="none"/>
+  </g>
+</svg> 

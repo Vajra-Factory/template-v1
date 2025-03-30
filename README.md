@@ -1,74 +1,183 @@
-# Vajrakama - Digital Creation Platform | AI-Powered Creative Tools
+# OverDrift - GPU Optimization SaaS
 
-> A modern, minimalist digital creation platform built with Next.js and TypeScript. Transform your creative vision into reality with AI-powered tools and real-time collaboration.
+> Rendering at the speed of thought.
 
-[![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)](https://nextjs.org)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org)
+OverDrift is a powerful GPU optimization SaaS that automatically detects and optimizes rendering workloads between iGPU and dGPU, with cloud offloading capabilities using Groq Cloud's Llama 3 infrastructure.
 
-## Overview
+## 🚀 Features
 
-Vajrakama is a cutting-edge digital creation platform that combines the power of artificial intelligence with intuitive design tools. Built for creators, designers, and artists who want to bring their ideas to life without technical constraints.
+- **Real-Time GPU Optimization**
+  - Automatic detection of iGPU/dGPU
+  - Dynamic workload distribution
+  - Real-time telemetry monitoring
 
-### Key Features
+- **Cloud Rendering**
+  - Offload to Groq Cloud (Llama 3)
+  - Distributed rendering capabilities
+  - Real-time sync between local and cloud
 
-- 🎨 **AI-Powered Creative Tools**: Leverage advanced AI to enhance your creative process
-- ⚡ **Real-time Collaboration**: Work seamlessly with team members in real-time
-- 🎯 **Project Management**: Organize and track your creative projects efficiently
-- 🔒 **Secure Authentication**: Enterprise-grade security for your creative assets
-- 🌙 **Dark Mode Support**: Comfortable viewing experience in any lighting condition
-- 📱 **Responsive Design**: Perfect experience across all devices
+- **Performance Monitoring**
+  - GPU, CPU, and memory usage tracking
+  - Frame rate and latency monitoring
+  - Automated performance reports
 
-## Quick Start Guide
+- **Dynamic Pricing**
+  - Supply-and-demand based pricing
+  - Real-time price updates
+  - Transparent billing
 
-1. Clone the repository:
-```bash
-git clone https://github.com/Vajra-Factory/template-v1.git
+- **Automated Reporting**
+  - Daily, weekly, monthly, and quarterly reports
+  - Performance graphs and statistics
+  - Email delivery via Gmail API
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Next.js 14, TypeScript, Tailwind CSS
+- **Backend**: Node.js, TypeScript
+- **Database**: PostgreSQL
+- **Authentication**: Auth.js with JWT
+- **Cloud Services**:
+  - Groq Cloud (Llama 3)
+  - Cloudflare (CDN, R2 Storage)
+  - Stripe (Payments)
+  - Gmail API (Reports)
+- **Infrastructure**:
+  - Redis (Rate Limiting)
+  - Vulkan API (GPU Rendering)
+  - TensorRT (Inference Optimization)
+
+## 🚀 Getting Started
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/overdrift.git
+   cd overdrift
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp .env.example .env.local
+   ```
+   Edit `.env.local` with your credentials.
+
+4. **Set up the database**
+   ```bash
+   npx prisma generate
+   npx prisma migrate dev
+   ```
+
+5. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+
+## 📝 Environment Variables
+
+Required environment variables:
+
+```env
+# Database
+DATABASE_URL="postgresql://user:password@localhost:5432/overdrift"
+
+# Authentication
+NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_SECRET="your-nextauth-secret"
+
+# Redis (Rate Limiting)
+UPSTASH_REDIS_REST_URL="your-redis-url"
+UPSTASH_REDIS_REST_TOKEN="your-redis-token"
+
+# Groq Cloud
+GROQ_API_KEY="your-groq-api-key"
+GROQ_ENDPOINT="https://api.groq.com/v1/chat/completions"
+
+# Gmail API
+GMAIL_CLIENT_EMAIL="your-gmail-client-email"
+GMAIL_PRIVATE_KEY="your-gmail-private-key"
+
+# Cloudflare R2
+CLOUDFLARE_ACCOUNT_ID="your-cloudflare-account-id"
+CLOUDFLARE_ACCESS_KEY_ID="your-cloudflare-access-key-id"
+CLOUDFLARE_SECRET_ACCESS_KEY="your-cloudflare-secret-access-key"
+CLOUDFLARE_BUCKET_NAME="overdrift-reports"
+
+# Stripe
+STRIPE_SECRET_KEY="your-stripe-secret-key"
+STRIPE_WEBHOOK_SECRET="your-stripe-webhook-secret"
+STRIPE_PRICE_ID="your-stripe-price-id"
 ```
 
-2. Install dependencies:
-```bash
-npm install
+## 📚 API Documentation
+
+### Telemetry API
+
+```typescript
+POST /api/telemetry
+{
+  gpuUsage: number;
+  vramUsage: number;
+  gpuTemp: number;
+  cpuUsage: number;
+  cpuTemp: number;
+  cpuClock: number;
+  ramUsage: number;
+  fps: number;
+  frameTime: number;
+  resolution: string;
+  isCloudRendered: boolean;
+  cloudProvider?: string;
+}
 ```
 
-3. Run the development server:
-```bash
-npm run dev
+### Render API
+
+```typescript
+POST /api/render
+{
+  settings: {
+    resolution: string;
+    quality: number;
+    frameCount: number;
+    format: string;
+  };
+  priority?: "LOW" | "NORMAL" | "HIGH" | "URGENT";
+  type?: "REALTIME" | "BATCH" | "CLOUD";
+}
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+### Reports API
 
-## Technology Stack
+```typescript
+POST /api/reports
+{
+  period: "DAILY" | "WEEKLY" | "MONTHLY" | "QUARTERLY";
+}
+```
 
-- **Framework**: Next.js 14
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **Authentication**: NextAuth.js
-- **Database**: Prisma with PostgreSQL
-- **Deployment**: Vercel-ready
+## 🤝 Contributing
 
-## Development
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-### Prerequisites
-- Node.js 18.x or later
-- npm 9.x or later
-- PostgreSQL 14.x or later
+## 📄 License
 
-### Environment Setup
-1. Copy `.env.example` to `.env`
-2. Configure your environment variables
-3. Run database migrations
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Contributing
+## 🙏 Acknowledgments
 
-We welcome contributions! Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting pull requests.
-
-## License
-
-This project is licensed under the GNU GENERAL PUBLIC LICENSE v3.0 - see the LICENSE file for details.
-
-## Note About Statistics
-
-All statistics and numbers mentioned in the website (including user counts, ratings, and other metrics) are placeholder values and should not be considered factual. These numbers are used for demonstration purposes only and do not reflect actual usage or performance metrics of the platform.
+- [Groq Cloud](https://groq.com) for their powerful LLM infrastructure
+- [Cloudflare](https://cloudflare.com) for CDN and storage services
+- [Stripe](https://stripe.com) for payment processing
+- [Next.js](https://nextjs.org) for the amazing React framework
 
 ## Keywords
 
@@ -77,7 +186,7 @@ digital creation, AI tools, creative platform, Next.js, TypeScript, real-time co
 ## Meta Tags
 
 ```html
-<meta name="description" content="Vajrakama - A modern, minimalist digital creation platform with AI-powered tools and real-time collaboration. Built with Next.js and TypeScript.">
+<meta name="description" content="OverDrift - A modern, minimalist digital creation platform with AI-powered tools and real-time collaboration. Built with Next.js and TypeScript.">
 <meta name="keywords" content="digital creation, AI tools, creative platform, Next.js, TypeScript, real-time collaboration">
 <meta name="author" content="Vajra Factory">
 <meta name="robots" content="index, follow">

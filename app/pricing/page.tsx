@@ -69,7 +69,7 @@ const faqs = [
   },
   {
     question: "What happens after my trial ends?",
-    answer: "After your trial ends, you'll be prompted to choose a plan to continue using Vajrakama.",
+    answer: "After your trial ends, you'll be prompted to choose a plan to continue using OverDrift.",
   },
 ]
 
@@ -85,7 +85,7 @@ export default function Pricing() {
               <span className="text-gradient">pricing</span>
             </h1>
             <p className="text-lg text-zinc-400 mb-8">
-              Choose the plan that's right for you. All plans include a 14-day free trial.
+              Choose the plan that&apos;s right for you. All plans include a 14-day free trial.
             </p>
           </div>
         </div>
@@ -166,7 +166,7 @@ export default function Pricing() {
           <div className="text-center max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold text-white mb-4">Still have questions?</h2>
             <p className="text-zinc-400 mb-8">
-              Can't find the answer you're looking for? Please chat to our friendly team.
+              Can&apos;t find the answer you&apos;re looking for? Please chat to our friendly team.
             </p>
             <Button
               size="lg"

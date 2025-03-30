@@ -1,78 +1,81 @@
 "use client"
 
-import { signIn } from "next-auth/react"
-import { Button } from "@/components/ui/button"
-import { Github, Mail } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
+import { SignInForm } from "@/components/auth/sign-in-form";
+import Image from "next/image";
 
-export default function SignIn() {
+export default function SignInPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black">
-      <div className="w-full max-w-md space-y-8 p-8">
-        <div className="text-center">
-          <div className="flex justify-center mb-8">
-            <div className="relative h-12 w-12">
-              <div className="absolute inset-0 bg-white rounded-lg transform rotate-45" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-black font-bold text-xl">V</span>
+    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black">
+      <div className="container relative h-screen flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+        {/* Left Panel - Branding */}
+        <div className="relative hidden h-full flex-col bg-black p-10 text-white lg:flex">
+          <div className="relative z-20 flex items-center text-lg font-medium">
+            <Image
+              src="/logo.svg"
+              alt="OverDrift"
+              width={40}
+              height={40}
+              className="mr-2"
+            />
+            <span className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+              OverDrift
+            </span>
+          </div>
+          
+          {/* Gaming Visual */}
+          <div className="relative z-20 mt-8">
+            <div className="relative aspect-video overflow-hidden rounded-xl">
+              <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 to-purple-600/20 animate-gradient" />
+              <div className="p-8">
+                <h2 className="text-3xl font-bold mb-4">
+                  Boost Your Gaming Performance
+                </h2>
+                <ul className="space-y-4 text-lg">
+                  <li className="flex items-center">
+                    <span className="mr-2">⚡</span>
+                    Real-time FPS optimization
+                  </li>
+                  <li className="flex items-center">
+                    <span className="mr-2">🎮</span>
+                    Smart GPU switching
+                  </li>
+                  <li className="flex items-center">
+                    <span className="mr-2">☁️</span>
+                    Cloud rendering support
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
-          <h2 className="text-3xl font-bold text-white">Welcome back</h2>
-          <p className="mt-2 text-zinc-400">Sign in to your account to continue</p>
-        </div>
 
-        <div className="space-y-4">
-          <Button
-            variant="outline"
-            className="w-full bg-white hover:bg-gray-100 text-black border-white/20"
-            onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-          >
-            <Image
-              src="/google.svg"
-              alt="Google"
-              width={20}
-              height={20}
-              className="mr-2"
-            />
-            Continue with Google
-          </Button>
-
-          <Button
-            variant="outline"
-            className="w-full bg-white hover:bg-gray-100 text-black border-white/20"
-            onClick={() => signIn("github", { callbackUrl: "/dashboard" })}
-          >
-            <Github className="mr-2 h-5 w-5" />
-            Continue with GitHub
-          </Button>
-
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-zinc-800"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-black text-zinc-400">Or continue with</span>
-            </div>
+          {/* Testimonial */}
+          <div className="relative z-20 mt-auto">
+            <blockquote className="space-y-2">
+              <p className="text-lg">
+                "OverDrift boosted my FPS by 40% and eliminated stuttering. It's a game-changer!"
+              </p>
+              <footer className="text-sm text-blue-400">
+                — Alex Chen, Pro Gamer
+              </footer>
+            </blockquote>
           </div>
-
-          <Button
-            variant="outline"
-            className="w-full bg-white hover:bg-gray-100 text-black border-white/20"
-          >
-            <Mail className="mr-2 h-5 w-5" />
-            Email
-          </Button>
         </div>
 
-        <p className="text-center text-sm text-zinc-400">
-          Don't have an account?{" "}
-          <Link href="/auth/signup" className="text-white hover:underline">
-            Sign up
-          </Link>
-        </p>
+        {/* Right Panel - Sign In Form */}
+        <div className="lg:p-8">
+          <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+            <div className="flex flex-col space-y-2 text-center">
+              <h1 className="text-3xl font-bold tracking-tight text-white">
+                Welcome back
+              </h1>
+              <p className="text-muted-foreground text-zinc-400">
+                Sign in to optimize your gaming experience
+              </p>
+            </div>
+            <SignInForm />
+          </div>
+        </div>
       </div>
     </div>
-  )
+  );
 } 
