@@ -67,12 +67,6 @@ We welcome contributions! Please read our [Contributing Guidelines](CONTRIBUTING
 
 This project is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) License - see the [LICENSE](LICENSE) file for details.
 
-### License Terms
-- ✅ Share the code freely
-- ✅ Must give appropriate credit
-- ❌ Cannot use for commercial purposes
-- ❌ Cannot create derivative works
-
 ## Note About Statistics
 
 All statistics and numbers mentioned in the website (including user counts, ratings, and other metrics) are placeholder values and should not be considered factual. These numbers are used for demonstration purposes only and do not reflect actual usage or performance metrics of the platform.
