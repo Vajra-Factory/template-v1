@@ -4,7 +4,7 @@
 
 [![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org)
-[![License](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg)](http://creativecommons.org/licenses/by-nc-nd/4.0/)
+[![License](https://www.gnu.org/licenses/gpl-3.0.en.html#license-text)
 
 ## Overview
 
@@ -65,7 +65,7 @@ We welcome contributions! Please read our [Contributing Guidelines](CONTRIBUTING
 
 ## License
 
-This project is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GNU GENERAL PUBLIC LICENSE v3.0 - see the [LICENSE](LICENSE) file for details.
 
 ## Note About Statistics
 
