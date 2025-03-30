@@ -77,12 +77,6 @@ This project is licensed under the Creative Commons Attribution-NonCommercial-No
 
 All statistics and numbers mentioned in the website (including user counts, ratings, and other metrics) are placeholder values and should not be considered factual. These numbers are used for demonstration purposes only and do not reflect actual usage or performance metrics of the platform.
 
-## Support
-
-- 📧 Email: support@vajrakama.com
-- 💬 Discord: [Join our community](https://discord.gg/vajrakama)
-- 📚 Documentation: [Read the docs](https://docs.vajrakama.com)
-
 ## Keywords
 
 digital creation, AI tools, creative platform, Next.js, TypeScript, real-time collaboration, project management, dark mode, responsive design, creative software, AI-powered design, digital art, creative workflow, modern web app, minimalist design
